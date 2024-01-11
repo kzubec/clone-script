@@ -65,7 +65,7 @@ branch12="lineage-21"
 
 repo13="${remote}/${user1}/android_hardware_xiaomi"
 path13="hardware/xiaomi"
-branch13="lineage-21
+branch13="lineage-21"
 
 for i in {0..12}; do
   repo_var="repo$i"
