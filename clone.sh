@@ -9,6 +9,7 @@ fi
 
 remote="https://github.com"
 user="kzubec"
+user1="LineageOS"
 
 repo0="${remote}/${user}/android_hardware_qcom-caf_sm6225.git"
 path0="hardware/qcom-caf/sm6225"
@@ -61,6 +62,10 @@ branch11="lineage-21"
 repo12="${remote}/${user}/android_vendor_xiaomi_tapas"
 path12="vendor/xiaomi/tapas"
 branch12="lineage-21"
+
+repo13="${remote}/${user1}/android_hardware_xiaomi"
+path13="hardware/xiaomi"
+branch13="lineage-21
 
 for i in {0..12}; do
   repo_var="repo$i"
