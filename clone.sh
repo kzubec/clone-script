@@ -54,7 +54,7 @@ path10="device/xiaomi/tapas"
 branch10="lineage-21"
 
 repo11="${remote}/${user}/android_kernel_xiaomi_tapas"
-path11="kernel/xiaomi/tapas"
+path11="device/xiaomi/tapas/prebuilts"
 branch11="lineage-21"
 
 repo12="${remote}/${user}/android_vendor_xiaomi_tapas"
