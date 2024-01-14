@@ -10,10 +10,8 @@ fi
 remote="https://github.com"
 user="kzubec"
 user1="LineageOS"
-
-repo0="${remote}/${user}/android_hardware_qcom-caf_sm6225.git"
-path0="hardware/qcom-caf/sm6225"
-branch0="lineage-21"
+audio_path="${clone_path}/hardware/qcom-caf/sm6225/audio"
+caf_path="${clone_path}/hardware/qcom-caf/sm6225"
 
 repo1="${remote}/${user}/android_vendor_qcom_opensource_agm.git"
 path1="hardware/qcom-caf/sm6225/audio/agm"
@@ -67,11 +65,16 @@ repo13="${remote}/${user1}/android_hardware_xiaomi"
 path13="hardware/xiaomi"
 branch13="lineage-21"
 
-for i in {0..12}; do
+for i in {1..13}; do
   repo_var="repo$i"
   branch_var="branch$i"
   path_var="path$i"
   full_path="$clone_path/${!path_var}"
-  rm -rf $full_path
-  git clone "${!repo_var}" -b "${!branch_var}" "$full_path"
+  if [ -d "$full_path" ]; then
+    rm -rf "$full_path"
+  fi
+  git clone "${!repo_var}" -b "${!branch_var}" "$full_path" || { echo "Error: Git clone failed for repository ${!repo_var}"; exit 1; }
 done
+  ln -s "${clone_path}/${path9}/os_pickup_audio-ar.mk" "${audio_path}/Android.mk"
+  ln -s "${clone_path}/${path9}/os_pickup_qssi.bp" "${caf_path}/Android.bp"
+  ln -s "${clone_path}/${path9}/os_pickup.mk" "${caf_path}/Android.mk"
