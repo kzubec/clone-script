@@ -80,7 +80,7 @@ for i in "${!repositories[@]}"; do
     rm -rf "$paths_path"
   fi
 
-  if [ "${repositories[i]}" == "android_hardware_xiaomi" ]; then
+  if [ "${repositories[i]}" == "android_hardware_xiaomi.git" ]; then
     git clone "${github_remote}/${lineage_user}/${repositories[i]}" -b "${branchs[i]}" "${paths_path}" || { echo "Error: Git clone failed for repository ${repositories[i]}"; exit 1; }
   else
     git clone "${github_remote}/${github_user}/${repositories[i]}" -b "${branchs[i]}" "${paths_path}" || { echo "Error: Git clone failed for repository ${repositories[i]}"; exit 1; }
