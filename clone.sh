@@ -75,7 +75,7 @@ for i in {1..13}; do
 done
 audio_path="${clone_path}/hardware/qcom-caf/sm6225/audio"
 caf_path="${clone_path}/hardware/qcom-caf/sm6225"
-common_path="$clone_path/${path9}
+common_path="$clone_path/${path9}"
   ln -s "${common_path}/os_pickup_audio-ar.mk" "${audio_path}/Android.mk"
   ln -s "${common_path}/os_pickup_qssi.bp" "${caf_path}/Android.bp"
   ln -s "${common_path}/os_pickup.mk" "${caf_path}/Android.mk"
