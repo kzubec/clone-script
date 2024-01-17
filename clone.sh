@@ -7,75 +7,92 @@ if [ -z "$clone_path" ]; then
   exit 1
 fi
 
-remote="https://github.com"
-user="kzubec"
-user1="LineageOS"
+github_remote="https://github.com"
+github_user="kzubec"
+lineage_user="LineageOS"
 
-repo1="${remote}/${user}/android_vendor_qcom_opensource_agm.git"
-path1="hardware/qcom-caf/sm6225/audio/agm"
-branch1="lineage-21.0-caf-sm6225"
+repositories=(
+  "android_vendor_qcom_opensource_agm.git"
+  "android_vendor_qcom_opensource_arpal-lx.git"
+  "android_hardware_qcom_audio.git"
+  "android_vendor_qcom_opensource_data-ipa-cfg-mgr.git"
+  "android_vendor_qcom_opensource_dataipa.git"
+  "android_hardware_qcom_display.git"
+  "android_hardware_qcom_media.git"
+  "android_device_qcom_sepolicy_vndr.git"
+  "android_hardware_qcom-caf_common.git"
+  "android_device_xiaomi_tapas.git"
+  "android_kernel_xiaomi_tapas.git"
+  "android_vendor_xiaomi_tapas"
+  "android_hardware_xiaomi"
+)
 
-repo2="${remote}/${user}/android_vendor_qcom_opensource_arpal-lx.git"
-path2="hardware/qcom-caf/sm6225/audio/pal"
-branch2="lineage-21.0-caf-sm6225"
+branchs=(
+  "lineage-21.0-caf-sm6225"
+  "lineage-21.0-caf-sm6225"
+  "lineage-21.0-caf-sm6225"
+  "lineage-21.0-caf-sm6225"
+  "lineage-21.0-caf-sm6225"
+  "lineage-21.0-caf-sm6225"
+  "lineage-21.0-caf-sm6225"
+  "lineage-21.0-caf-sm6225"
+  "lineage-21"
+  "lineage-21"
+  "lineage-21"
+  "lineage-21"
+  "lineage-21"
+)
 
-repo3="${remote}/${user}/android_hardware_qcom_audio.git"
-path3="hardware/qcom-caf/sm6225/audio/primary-hal"
-branch3="lineage-21.0-caf-sm6225"
+paths=(
+  "hardware/qcom-caf/sm6225/audio/agm"
+  "hardware/qcom-caf/sm6225/audio/pal"
+  "hardware/qcom-caf/sm6225/audio/primary-hal"
+  "hardware/qcom-caf/sm6225/data-ipa-cfg-mgr"
+  "hardware/qcom-caf/sm6225/dataipa"
+  "hardware/qcom-caf/sm6225/display"
+  "hardware/qcom-caf/sm6225/media"
+  "device/qcom/sepolicy_vndr/sm6225"
+  "hardware/qcom-caf/common"
+  "device/xiaomi/tapas"
+  "device/xiaomi/tapas/prebuilts"
+  "vendor/xiaomi/tapas"
+  "hardware/xiaomi"
+)
 
-repo4="${remote}/${user}/android_vendor_qcom_opensource_data-ipa-cfg-mgr.git"
-path4="hardware/qcom-caf/sm6225/data-ipa-cfg-mgr"
-branch4="lineage-21.0-caf-sm6225"
+platforms=(
+  "msm8953"
+  "msm8996"
+  "msm8998"
+  "sdm660"
+  "sdm845"
+  "sm6225"
+  "sm8150"
+  "sm8250"
+  "sm8350"
+  "sm8450"
+  "sm8550"
+)
 
-repo5="${remote}/${user}/android_vendor_qcom_opensource_dataipa.git"
-path5="hardware/qcom-caf/sm6225/dataipa"
-branch5="lineage-21.0-caf-sm6225"
-
-repo6="${remote}/${user}/android_hardware_qcom_display.git"
-path6="hardware/qcom-caf/sm6225/display"
-branch6="lineage-21.0-caf-sm6225"
-
-repo7="${remote}/${user}/android_hardware_qcom_media.git"
-path7="hardware/qcom-caf/sm6225/media"
-branch7="lineage-21.0-caf-sm6225"
-
-repo8="${remote}/${user}/android_device_qcom_sepolicy_vndr.git"
-path8="device/qcom/sepolicy_vndr/sm6225"
-branch8="lineage-21.0-caf-sm6225"
-
-repo9="${remote}/${user}/android_hardware_qcom-caf_common.git"
-path9="hardware/qcom-caf/common"
-branch9="lineage-21"
-
-repo10="${remote}/${user}/android_device_xiaomi_tapas"
-path10="device/xiaomi/tapas"
-branch10="lineage-21"
-
-repo11="${remote}/${user}/android_kernel_xiaomi_tapas"
-path11="device/xiaomi/tapas/prebuilts"
-branch11="lineage-21"
-
-repo12="${remote}/${user}/android_vendor_xiaomi_tapas"
-path12="vendor/xiaomi/tapas"
-branch12="lineage-21"
-
-repo13="${remote}/${user1}/android_hardware_xiaomi"
-path13="hardware/xiaomi"
-branch13="lineage-21"
-
-for i in {1..13}; do
-  repo_var="repo$i"
-  branch_var="branch$i"
-  path_var="path$i"
-  full_path="$clone_path/${!path_var}"
-  if [ -d "$full_path" ]; then
-    rm -rf "$full_path"
+for i in "${!repositories[@]}"; do
+  paths_path="${clone_path}/${paths[i]}"
+  
+  if [ -d "$paths_path" ]; then
+    rm -rf "$paths_path"
   fi
-  git clone "${!repo_var}" -b "${!branch_var}" "$full_path" || { echo "Error: Git clone failed for repository ${!repo_var}"; exit 1; }
+
+  if [ "${repositories[i]}" == "android_hardware_xiaomi" ]; then
+    git clone "${github_remote}/${lineage_user}/${repositories[i]}" -b "${branchs[i]}" "${paths_path}" || { echo "Error: Git clone failed for repository ${repositories[i]}"; exit 1; }
+  else
+    git clone "${github_remote}/${github_user}/${repositories[i]}" -b "${branchs[i]}" "${paths_path}" || { echo "Error: Git clone failed for repository ${repositories[i]}"; exit 1; }
+  fi
 done
-audio_path="${clone_path}/hardware/qcom-caf/sm6225/audio"
-caf_path="${clone_path}/hardware/qcom-caf/sm6225"
-common_path="$clone_path/${path9}"
-  ln -s "${common_path}/os_pickup_audio-ar.mk" "${audio_path}/Android.mk"
-  ln -s "${common_path}/os_pickup_qssi.bp" "${caf_path}/Android.bp"
-  ln -s "${common_path}/os_pickup.mk" "${caf_path}/Android.mk"
+
+  for platform in "${platforms[@]}"; do
+    platform_path="${clone_path}/hardware/qcom-caf/${platform}"
+    audio_path="${platform_path}/audio"
+    common_path="${clone_path}/hardware/qcom-caf/common"
+    ln -s "${common_path}/os_pickup_audio-ar.mk" "${audio_path}/Android.mk"
+    ln -s "${common_path}/os_pickup_qssi.bp" "${platform_path}/Android.bp"
+    ln -s "${common_path}/os_pickup.mk" "${platform_path}/Android.mk"
+done
+
