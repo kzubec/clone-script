@@ -23,8 +23,8 @@ repositories=(
   "android_hardware_qcom-caf_common.git"
   "android_device_xiaomi_tapas.git"
   "android_kernel_xiaomi_tapas.git"
-  "android_vendor_xiaomi_tapas"
-  "android_hardware_xiaomi"
+  "android_vendor_xiaomi_tapas.git"
+  "android_hardware_xiaomi.git"
 )
 
 branchs=(
