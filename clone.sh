@@ -21,9 +21,9 @@ repositories=(
   "android_hardware_qcom_media.git"
   "android_device_qcom_sepolicy_vndr.git"
   "android_hardware_qcom-caf_common.git"
-  "android_device_xiaomi_tapas.git"
-  "android_kernel_xiaomi_tapas.git"
-  "android_vendor_xiaomi_tapas.git"
+  "android_device_xiaomi_topaz.git"
+  "android_device_xiaomi_topaz-kernel.git"
+  "android_vendor_xiaomi_topaz.git"
   "android_hardware_xiaomi.git"
 )
 
@@ -53,9 +53,9 @@ paths=(
   "hardware/qcom-caf/sm6225/media"
   "device/qcom/sepolicy_vndr/sm6225"
   "hardware/qcom-caf/common"
-  "device/xiaomi/tapas"
-  "device/xiaomi/tapas/prebuilts"
-  "vendor/xiaomi/tapas"
+  "device/xiaomi/topaz"
+  "device/xiaomi/topaz-kernel"
+  "vendor/xiaomi/topaz"
   "hardware/xiaomi"
 )
 
@@ -81,9 +81,9 @@ for i in "${!repositories[@]}"; do
   fi
 
   if [ "${repositories[i]}" == "android_hardware_xiaomi.git" ]; then
-    git clone "${github_remote}/${lineage_user}/${repositories[i]}" -b "${branchs[i]}" "${paths_path}" || { echo "Error: Git clone failed for repository ${repositories[i]}"; exit 1; }
+    git clone "${github_remote}/${lineage_user}/${repositories[i]}" -b "${branchs[i]}" "${paths_path}" || { echo "Error: Git clone failed for repository ${repositories[i]}"; rm -rf "$paths_path"; exit 1; }
   else
-    git clone "${github_remote}/${github_user}/${repositories[i]}" -b "${branchs[i]}" "${paths_path}" || { echo "Error: Git clone failed for repository ${repositories[i]}"; exit 1; }
+    git clone "${github_remote}/${github_user}/${repositories[i]}" -b "${branchs[i]}" "${paths_path}" || { echo "Error: Git clone failed for repository ${repositories[i]}"; rm -rf "$paths_path"; exit 1; }
   fi
 done
 
